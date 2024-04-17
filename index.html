@@ -266,7 +266,7 @@ function clean()
             let i=0;
             while(binary>0)
                 {
-                    let rem=binary%10;
+                    let rem=Math.trunc(binary%10);
                     decimal=decimal+(rem*Math.pow(2,i));
                     binary=binary/10;
                     i++;
