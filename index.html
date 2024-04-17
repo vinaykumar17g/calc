@@ -259,6 +259,22 @@ function clean()
         }
           
     })
+    function binarytodecimal(binary)
+        {
+            let decimal=0;
+            let base=1;
+            let i=0;
+            while(binary>0)
+                {
+                    let rem=binary%10;
+                    decimal=decimal+(rem*Math.pow(2,i);
+                    binary=binary/10;
+                    i++;
+                }
+            console.log(decimal)
+        }
+    binarytodecimal(100);
+    binarytodecimal(101);
 </script>
 </body>
 </html>
