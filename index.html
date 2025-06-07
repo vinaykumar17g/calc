@@ -3,293 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculater</title>
+    <title>Calculator</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
     <script src="https://kit.fontawesome.com/df95116d29.js" crossorigin="anonymous"></script>
     <style>
-body
-{
-    background-color:aqua;
-    text-align: center;
-    background-size: cover;
-}
-@media(max-width:400px)
-{
-#container
-{
-    height:550px;
-    width:100%;
-}
-}
-@media(min-width:400px)
-{
-#container
-{
-    height:550px;
-    width:400px;
-}
-}
+        /* Apply a custom font and ensure full height */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Dark background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Prevent scrollbar from background image */
+        }
 
-#container
-{
-    background-color: transparent;
-    text-align: center;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    border-radius: 50%;
-}
-form
-{
-    width:100%;
-    height:100%;
-    border-radius:20px;
-    justify-content:space-around;;
-    align-items: center;
-    background-color: rgb(14, 12, 12);
+        /* Custom styles for calculator buttons */
+        .calculator-button {
+            height: 60px;
+            width: 60px;
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            border-radius: 9999px; /* rounded-full */
+            transition: background-color 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            user-select: none; /* Prevent text selection */
+        }
 
+        /* Specific styles for special buttons like conversion */
+        .conversion-button {
+            width: 100%; /* Make it span full width */
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            border-radius: 1.5rem; /* rounded-3xl */
+            font-size: 1.125rem; /* text-lg */
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
 
-}
-button
-{
-    margin-top:10px;
-    border:none;
-    border-radius:20px;
-    height:50px;
-    width:50px;
-    color:coral;
-    background: none;
-    font-size: 25px;
-}
-input
-{
-    margin-top:10px;
-    border:none;
-    outline:none;
-    border-radius:20px;
-    height:50px;
-    width:50px;
-    font-size:30px;
-    text-align: right;
-}
-form div {
-    width:80%;
-    display: flex;
-    justify-content: space-evenly;
-    margin-top:25px;
-    margin-left:10%;
-}
-.hide
-{
-    display:none;
-    transition: all;
-    transition-timing-function: linear;
-    transition-duration: 6s;
-}
-button:hover
-{
-    background-color: rgb(170, 170, 203);
-}
+        /* Styles for hidden scientific buttons */
+        .hide {
+            display: none;
+        }
+
+        /* Focus outline removal for accessibility and aesthetic */
+        button:focus {
+            outline: none;
+            box-shadow: none;
+        }
     </style>
 </head>
-<body>
-    <center><div id="container" style="border-radius:20%;">
-            <form class="form">
-                <div style="width:80%;margin-left:10%;">
-                    <input type="text" name="display" style="height:50px;width:100%;" id="display" placeholder="Enter any value">
-                </div>
+<body class="bg-gray-900">
+    <!-- Main Calculator Container -->
+    <div id="calculator-container" class="bg-gray-800 p-6 rounded-3xl shadow-2xl max-w-sm w-full mx-auto">
+        <!-- Display Input -->
+        <input type="text" id="display" class="w-full h-20 text-right text-4xl font-light text-white bg-gray-900 rounded-lg p-4 mb-5 border-none outline-none overflow-hidden" placeholder="0" readonly>
 
-                <div class="hide">
-                    <button value="AC" type="button" style="margin-left:1px;"  onclick="pow()"><sup>x<sup>2</sup></button>
-                    <button value="AC" type="button" style="margin-left:1px;"  id="mod">M</button>
-                    <button value="sin" type="button" style="margin-left:1px;" onclick="sin()">Sin</button>
-                    <button  value="cos" type="button" style="margin-right:10px;" onclick="cos()">Cos</button>
-                    <button value="tan" type="button" style="margin-right:10px;" onclick="tan()" >Tan</button>
-                  
-                </div> 
-                <div>
-                   <button value="AC" type="button" style="margin-left:1px;" onclick="sqrt()" class="hide">&radic;x</button>
-                    <button value="AC" type="button" style="margin-left:1px;" onclick="display.value=' '">AC</button>
-                    <button  value="C" type="button" style="margin-right:10px;" onclick="clean()">C</button>
-                    <button value="%" type="button" style="margin-right:10px;" onclick="display.value+='%'">%</button>
-                    <button value="/" type="button" style="margin-right:10px;" onclick="display.value+='/'">/</button>
-                </div>
-                <div>
-                    <button value="AC" type="button" style="margin-left:1px;" onclick="log()" class="hide">log</button>
-                    <button type="button"  value="7" onclick="display.value+='7' " oncdbllick="button='disabled'">7</button>
-                    <button value="8" type="button" onclick="display.value+='8'">8</button>
-                    <button value="9" type="button" onclick="display.value+='9'">9</button>
-                    <button type="button" value="*" onclick="display.value+='*'">*</button>
-                </div>
-                <div>
-                    <button value="AC" type="button" style="margin-left:1px;" onclick="fact()" class="hide">x!</button>
-                    <button type="button" value="4" onclick="display.value+='4'">4</button>
-                    <button  type="button" value="5" onclick="display.value+='5'">5</button>
-                    <button  type="button" value="6" onclick="display.value+='6'">6</button>
-                    <button type="button" value="-" onclick="display.value+='-'">-</button>
-                </div>
-                <div>
-                    <button value="deg" type="button" style="margin-right:10px;" onclick="display.value+='3.14'" class="hide">&pi;</button>
-                    <button name="1" value="1" type="button" onclick="display.value+='1'">1</button>
-                    <button name="2" value="2" type="button" onclick="display.value+='2'">2</button>
-                    <button name="3" value="3" type="button" onclick="display.value+='3'">3</button>
-                    <button name="+" value="+" type="button" onclick="display.value+='+'">+</button>
-                </div>
-                <div>
-                    <button value="R" value="R" type="button" onclick=" scientific()"><i class="fa-solid fa-rotate-right"></i></button>
-                    <button value="AC" type="button" style="margin-left:1px;" onclick="display.value='2.718'" class="hide">e</button>                    
-                    <button name="0" value="0" type="button" onclick="display.value+='0'">0</button>
-                    <button name="." value="." type="button" onclick="display.value+='.'">.</button>
-                    <button value="=" name="2"  type="button" onclick="calculation()" style="background-color:coral;color:white" >=</button>
-                </div>
-            </form>
+        <!-- Conversion Buttons (Binary-Decimal, Decimal-Binary) -->
+        <div class="flex flex-col mb-4 space-y-3">
+            <button id="binaryToDecimalBtn" class="conversion-button bg-blue-700 text-white hover:bg-blue-800">
+                Binary-Decimal
+            </button>
+            <button id="decimalToBinaryBtn" class="conversion-button bg-blue-700 text-white hover:bg-blue-800">
+                Decimal-Binary
+            </button>
+        </div>
+
+        <!-- Scientific Functions Row (initially hidden) -->
+        <div id="scientific-row-1" class="grid grid-cols-5 gap-3 mb-3 hide">
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="pow()">x²</button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="sin()">sin</button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="cos()">cos</button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="tan()">tan</button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="sqrt()">√x</button>
+        </div>
+
+        <div id="scientific-row-2" class="grid grid-cols-5 gap-3 mb-3 hide">
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="log()">log</button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="fact()">x!</button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="display.value+='3.14159'">π</button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="display.value+='2.71828'">e</button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="mod()">M</button>
+        </div>
+
+        <!-- Main Calculator Grid -->
+        <div class="grid grid-cols-4 gap-3">
+            <!-- First Row -->
+            <button class="calculator-button bg-red-600 text-white hover:bg-red-700" onclick="display.value=''">AC</button>
+            <button class="calculator-button bg-red-600 text-white hover:bg-red-700" onclick="clean()">C</button>
+            <button class="calculator-button bg-gray-600 text-white hover:bg-gray-500" onclick="display.value+='%'">%</button>
+            <button class="calculator-button bg-orange-500 text-white hover:bg-orange-600" onclick="display.value+='/'">/</button>
+
+            <!-- Second Row -->
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="display.value+='7'">7</button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="display.value+='8'">8</button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="display.value+='9'">9</button>
+            <button class="calculator-button bg-orange-500 text-white hover:bg-orange-600" onclick="display.value+='*'">*</button>
+
+            <!-- Third Row -->
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="display.value+='4'">4</button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="display.value+='5'">5</button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="display.value+='6'">6</button>
+            <button class="calculator-button bg-orange-500 text-white hover:bg-orange-600" onclick="display.value+='-'">-</button>
+
+            <!-- Fourth Row -->
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="display.value+='1'">1</button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="display.value+='2'">2</button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="display.value+='3'">3</button>
+            <button class="calculator-button bg-orange-500 text-white hover:bg-orange-600" onclick="display.value+='+'">+</button>
+
+            <!-- Fifth Row -->
+            <button class="calculator-button bg-purple-600 text-white hover:bg-purple-700" onclick="scientific()">
+                <i class="fas fa-flask"></i>
+            </button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600 col-span-2" onclick="display.value+='0'">0</button>
+            <button class="calculator-button bg-gray-700 text-white hover:bg-gray-600" onclick="display.value+='.'">.</button>
+            <button class="calculator-button bg-blue-600 text-white hover:bg-blue-700" onclick="calculation()">=</button>
+        </div>
     </div>
-        </center>
-<script>
-    let hid=document.querySelectorAll(".hide");
-let back=document.querySelector("#container");
-let mod=document.querySelector("#mod");
-let mode='dark';
-let r='normal';
-function calculation( )
-{
-        let display=document.getElementById('display').value;
-        var result=eval(display);
-        document.getElementById('display').value=result;
-}
 
-document.addEventListener('keydown' ,()=>
-{
-    var key=event.key;
-    if( key>='0' && key <='9')
-    {
-        document.getElementById('display') .value+=key
-    }
-    else if(key=='+'||key=='-'|| key=='*'|| key=='/'|| key=='%')
-    {
-        document.getElementById('display') .value+=key
-    }
-    else if(key=='=' || key=='Enter')
-    {
-        calculation();
-    }
-    else if(key=='Backspace')
-    {
-        clean()
-    }
-    else if(key=='Delete')
-    {
-        display.value=" "
-    }
-    else if (key=='r'|| key=='R')
-    {
-        scientific();
-    }
+    <script>
+        const display = document.getElementById('display');
+        const scientificRow1 = document.getElementById('scientific-row-1');
+        const scientificRow2 = document.getElementById('scientific-row-2');
+        const binaryToDecimalBtn = document.getElementById('binaryToDecimalBtn');
+        const decimalToBinaryBtn = document.getElementById('decimalToBinaryBtn');
 
-});
-function clean()
-{
-    document.getElementById('display').value=display.value.slice(0, -1);
-}
-
- function scientific()
- {
-    if( r=="normal")
-    {
-        for(let i=0;i<hid.length;i++)
-        {
-            hid[i].classList.remove("hide");
-          
-        }         
-        r="science";
-        document.querySelector("#container").style.height='650px';
-        
-    }
-    else
-    {
-        for(let i=0;i<hid.length;i++)
-        {
-            hid[i].classList.add("hide");
-          
-        } 
-        r="normal";
-        document.querySelector("#container").style.height='550px';
-    }
-
- }
- function sin()
- {
-    document.getElementById('display').value=Math.sin(Number(document.getElementById('display').value));
- }
-
- function cos()
- {
-    document.getElementById('display').value=Math.cos(Number(document.getElementById('display').value));
- }
- function tan()
- {
-    document.getElementById('display').value=Math.tan(Number(document.getElementById('display').value));
- }
- function  log()
- {
-    document.getElementById('display').value=Math.log(Number(document.getElementById('display').value));
- }
- function ln()
- {
-    document.getElementById('display').value=Math.ln(Number(document.getElementById('display').value));
- }
-
- function sqrt()
- {
-    document.getElementById('display').value=Math.sqrt(document.getElementById('display').value);
- }
- function pow()
- {
-    document.getElementById('display').value=Math.pow(document.getElementById('display').value,2);
- }
- function fact()
- {
-    let num=document.getElementById('display').value;
-    let fact=1;
-    for( let i=1;i<=num;i++)
-    {
-        fact=fact*i;
-    }
-        display.value=fact;
- }
- function background()
- {
-    form=document.querySelector(".form");
-    form.style.backgroundColor="blue"
-
- }
- mod.addEventListener('click',()=>
-    {
-        if (mode=="dark")
-        {
-            document.querySelector(".form").style.backgroundColor="white";
-            mode="light";
+        // Function to clear the last character from the display
+        function clean() {
+            display.value = display.value.slice(0, -1);
         }
-        
-        else{
-            document.querySelector(".form").style.backgroundColor="black";
-            mode='dark'; 
+
+        // Function to perform calculations
+        function calculation() {
+            try {
+                // Replace % with /100 for proper evaluation of percentage
+                let expression = display.value.replace(/%/g, '/100');
+                display.value = eval(expression);
+            } catch (error) {
+                display.value = 'Error';
+            }
         }
-          
-    })
-    function binarytodecimal(binary)
-        {
-            let decimal=0;
-            let base=1;
-            let i=0;
-            while(binary>0)
-                {
-                    let rem=Math.trunc(binary%10);
-                    decimal=decimal+(rem*Math.pow(2,i));
-                    binary=binary/10;
-                    i++;
+
+        // --- Scientific Functions ---
+
+        // Power (x^2)
+        function pow() {
+            try {
+                display.value = Math.pow(parseFloat(display.value), 2);
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+
+        // Sine
+        function sin() {
+            try {
+                // Convert degrees to radians for trigonometric functions
+                display.value = Math.sin(parseFloat(display.value) * (Math.PI / 180));
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+
+        // Cosine
+        function cos() {
+            try {
+                display.value = Math.cos(parseFloat(display.value) * (Math.PI / 180));
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+
+        // Tangent
+        function tan() {
+            try {
+                display.value = Math.tan(parseFloat(display.value) * (Math.PI / 180));
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+
+        // Square Root
+        function sqrt() {
+            try {
+                display.value = Math.sqrt(parseFloat(display.value));
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+
+        // Logarithm (base 10)
+        function log() {
+            try {
+                display.value = Math.log10(parseFloat(display.value));
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+
+        // Factorial
+        function fact() {
+            try {
+                let num = parseInt(display.value);
+                if (num < 0) {
+                    display.value = "Error: Neg Fact";
+                    return;
                 }
-            display.value=decimal;
+                if (num === 0) {
+                    display.value = 1;
+                    return;
+                }
+                let result = 1;
+                for (let i = 1; i <= num; i++) {
+                    result *= i;
+                }
+                display.value = result;
+            } catch (error) {
+                display.value = 'Error';
+            }
         }
-</script>
+
+        // Modulo (placeholder for 'M' button, user's original logic was just a button with id 'mod')
+        function mod() {
+             display.value += '%'; // Assuming 'M' is for modulo operator
+        }
+
+        // Function to toggle scientific buttons visibility
+        function scientific() {
+            scientificRow1.classList.toggle('hide');
+            scientificRow2.classList.toggle('hide');
+        }
+
+        // --- Base Conversion Functions ---
+
+        // Binary to Decimal
+        binaryToDecimalBtn.addEventListener('click', () => {
+            const binary = display.value;
+            // Check if the input is a valid binary number (only 0s and 1s)
+            if (!/^[01]+$/.test(binary)) {
+                display.value = 'Error: Invalid Binary';
+                return;
+            }
+            try {
+                display.value = parseInt(binary, 2);
+            } catch (error) {
+                display.value = 'Error';
+            }
+        });
+
+        // Decimal to Binary
+        decimalToBinaryBtn.addEventListener('click', () => {
+            const decimal = display.value;
+            if (isNaN(parseFloat(decimal))) {
+                display.value = 'Error: Invalid Number';
+                return;
+            }
+            try {
+                display.value = parseInt(decimal).toString(2);
+            } catch (error) {
+                display.value = 'Error';
+            }
+        });
+    </script>
 </body>
 </html>
